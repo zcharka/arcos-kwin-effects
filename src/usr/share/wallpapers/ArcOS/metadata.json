@@ -1,0 +1,13 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "srubaj@proton.me",
+                "Name": "zcharka"
+            }
+        ],
+        "Id": "ArcOS",
+        "License": "CC BY-NC-SA 3.0",
+        "Name": "ArcOS"
+    }
+}
