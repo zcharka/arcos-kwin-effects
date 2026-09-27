@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = kwin
+Target = plasma-desktop
+
+[Action]
+Description = Rebuilding ArcOS KWin effects against the current KWin...
+When = PostTransaction
+Exec = /usr/bin/systemctl start arcos-kwin-effects-rebuild.service

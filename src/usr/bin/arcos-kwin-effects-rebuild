@@ -1,0 +1,65 @@
+#!/bin/bash
+
+set -u
+
+GLASS_DIR="/tmp/_arcos_kwin_glass_build"
+ROUNDED_DIR="/tmp/_arcos_kwin_rounded_build"
+
+cleanup() {
+    rm -rf "${GLASS_DIR}" "${ROUNDED_DIR}"
+}
+
+trap cleanup EXIT
+
+build_effect() {
+    local name="$1"
+    local repo="$2"
+    local dir="$3"
+
+    echo "==> Building ${name}..."
+
+    rm -rf "${dir}"
+
+    if ! git clone --depth 1 "${repo}" "${dir}"; then
+        echo "ERROR: Failed to clone ${name}." >&2
+        return 1
+    fi
+
+    if ! cmake \
+        -B "${dir}/build" \
+        -S "${dir}" \
+        -DCMAKE_INSTALL_PREFIX=/usr; then
+        echo "ERROR: CMake configuration failed for ${name}." >&2
+        return 1
+    fi
+
+    if ! cmake \
+        --build "${dir}/build" \
+        --parallel "$(nproc)"; then
+        echo "ERROR: Build failed for ${name}." >&2
+        return 1
+    fi
+
+    if ! cmake \
+        --install "${dir}/build"; then
+        echo "ERROR: Installation failed for ${name}." >&2
+        return 1
+    fi
+
+    echo "==> ${name} rebuilt successfully."
+    return 0
+}
+
+status=0
+
+build_effect \
+    "KWin Effects Glass" \
+    "https://github.com/4v3ngR/kwin-effects-glass" \
+    "${GLASS_DIR}" || status=1
+
+build_effect \
+    "KDE Rounded Corners" \
+    "https://github.com/matinlotfali/KDE-Rounded-Corners" \
+    "${ROUNDED_DIR}" || status=1
+
+exit "${status}"

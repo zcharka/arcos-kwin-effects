@@ -1,0 +1,8 @@
+[Unit]
+Description=Rebuild ArcOS KWin effects against the current KWin
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/arcos-kwin-effects-rebuild

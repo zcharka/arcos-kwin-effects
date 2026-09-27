@@ -1,4 +1,4 @@
-#ArcOS kwin effects
+# arcos-kwin-effects
 
 **EN:**
 
@@ -13,4 +13,3 @@ Ta paczkla ustawia rzeczy w pulpicie plasma
 - efekty Kwina (glass i rounded-corners)
 - Ustawia przeźroczyustość w programach (konsole i inne)
 - Instaluje ponownie efekty po aktualizacji KWina
-# arcos-kwin-effects
